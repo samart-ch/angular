@@ -3,6 +3,7 @@ import { UserForm } from '../models/user-form';
 import { AuthService } from '../services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ErrorDialogComponent } from '../error-dialog/error-dialog.component';
+import { StorageService } from '../services/storage.service';
 
 @Component({
   selector: 'app-register',
@@ -15,10 +16,16 @@ export class RegisterComponent {
   form = new UserForm();
 
   // test;
-  constructor(private authService: AuthService,private dialog: MatDialog) {}
+  constructor(
+    private authService: AuthService,
+    private dialog: MatDialog,
+    private storageService: StorageService
+  ) {}
 
   onSubmit() {
     const { username, email, password } = this.form;
+
+    this.storageService.saveUser({ username, email, password: "***" });
 
     console.log('Username:', username);
     console.log('Email:', email);
